@@ -1,7 +1,6 @@
 package com.example.movieapp.data.remote.api
 
 import com.example.movieapp.core.constants.Constants.Companion.API_KEY
-import com.example.movieapp.domain.model.MovieResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

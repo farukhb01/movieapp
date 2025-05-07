@@ -2,16 +2,17 @@ package com.example.movieapp.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.movieapp.data.local.entity.MovieEntity
-import com.example.movieapp.data.remote.api.MovieApiService
+import com.example.movieapp.data.local.db.entity.MovieEntity
+import com.example.movieapp.data.remote.api.MovieDto
+import com.example.movieapp.data.remote.datasource.RemoteDataSource
 
 
 class MoviePagingSource(
-    private val api: MovieApiService,
+    private val api: RemoteDataSource,
     private val category: String,
-) : PagingSource<Int, MovieEntity>() {
+) : PagingSource<Int, MovieDto>() {
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieEntity> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieDto> {
         val page = params.key ?: 1
         return try {
             val response = api.getMoviesList(category, page = page)
@@ -27,7 +28,7 @@ class MoviePagingSource(
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, MovieEntity>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, MovieDto>): Int? {
         return state.anchorPosition?.let { anchor ->
             state.closestPageToPosition(anchor)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchor)?.nextKey?.minus(1)
