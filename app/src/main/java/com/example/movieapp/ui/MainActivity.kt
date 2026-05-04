@@ -23,6 +23,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         createNotificationChannel()
     }
 
+    //Setting up viewpager
     private fun setUpViewPager() {
         val listOfFragments = listOf(MovieFragment(), FavoriteMoviesFragment())
 
